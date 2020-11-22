@@ -1,0 +1,158 @@
+﻿@model WebDev.Models.client
+@{
+    ViewBag.Title = "Client Update";
+}
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        setTimeout(function () { $(".success").fadeOut(5000); }, 5000);
+
+        $("#result").DataTable({
+            "ajax": {
+                "url": "/ClientReg/getAllData",
+                "type": "GET",
+                "datatype": "json",
+                "dataSrc": ""
+            },
+            "columns": [
+                { "data": "FullName" },
+                { "data": "Age", className: "text-center" },
+                { "data": "Email" },
+                { "data": "Address" },
+                { "data": "Phone" }
+            ],
+            "oLanguage": {
+                "sSearch": "Quick Search:"
+            },
+            "pageLength": 25
+        });
+
+        $('#Email').change(function () {
+            var email = this.value;
+            $.getJSON('@Url.Action("GetClients")', { email: email }  ).done(function(data){
+                $('#Address').empty();
+                $("#Phone").empty();
+                $.each(data, function (i, value) {
+                  //  $('#Email').append($('<option/>').val(value.Email).text(value.Email));
+                    $("#Address").val(value.Address);
+                    $("#Phone").val(value.Phone);
+                    $("#updateSubmit").valid();
+                });
+            });
+        });
+
+        $("#updateSubmit").submit(function (event) {
+            event.preventDefault();
+            if ($(this).valid()) {
+             alertify.confirm('Confirm Update', 'Are you sure, you want to update this record?', function () {
+                    $("#updateSubmit")[0].submit();
+                },function () {});
+             } else {
+                return false;
+            }
+        });
+
+    }); //doc ready
+    function ClearAll() {
+            location.href = '@Url.Action("Index","ClientEdit")';
+        }
+    function confirm(event, msg) {
+        var evt = event;
+        event.preventDefault();
+        alertify.confirm(msg, "Update Record", function (e) {
+            if (e) {
+                evt.currentTarget.submit();
+                return true;
+            } else {
+                return false;
+            }
+        });
+    }
+</script>
+
+
+
+@{
+    Random rnd = new Random();
+    int picID = rnd.Next(1, 7);
+    picID++;
+    var picName = "~/Content/images/" + picID + ".png";
+}
+<div class="container">
+    <div calss="row">
+        <div class="col-sm-12 slogans">Make any occasion unforgettable</div>
+    </div>
+    <div class="img-forms" style="background-image: url('@Url.Content(picName)');">
+        <div class="row">
+            <div class="col-sm-12 header-data">Client Update</div>
+        </div>
+        <div class="row">
+            <div class="col-sm-8">
+                @using (Html.BeginForm("Index", "ClientEdit", FormMethod.Post, new { id = "updateSubmit", name = "updateSubmit" }))
+                {
+                    @Html.AntiForgeryToken()
+                <table align="center">
+                    <tr>
+                        <th width="30%">@Html.LabelFor(model => model.Email, new { @class = "myLabel" })</th>
+                        <td width="30%">@Html.DropDownList("Email", null, "--Select--", new { @class = "form-control", required = "", title = "Please select Event Name", style = "width:250px;" })</td>
+                        <td width="40%">@Html.ValidationMessageFor(model => model.Email, null, new { @class = "errorMsg" })</td>
+                    </tr>
+                    <tr>
+                        <th>@Html.LabelFor(model => model.Address, new { @class = "myLabel" })</th>
+                        <td>@Html.EditorFor(model => model.Address, new { @class = "form-control", @style = "width:100% !important; min-width:280px !important;" })</td>
+                        <td>@Html.ValidationMessageFor(model => model.Address, "", new { @class = "errorMsg" })</td>
+                    </tr>
+                    <tr>
+                        <th>@Html.LabelFor(model => model.Phone, new { @class = "myLabel" })</th>
+                        <td>@Html.EditorFor(model => model.Phone, new { @class = "form-control" })</td>
+                        <td>@Html.ValidationMessageFor(model => model.Phone, "", new { @class = "errorMsg" })</td>
+                    </tr>
+                    <tr>
+                        <th>@Html.Label("PaymentAmount", "PaymentAmount", new { @class = "myLabel" })</th>
+                        <td>@Html.TextBox("PaymentAmount", null, new { @class = "form-control" })</td>
+                 
+                    </tr>
+                    <tr>
+                        <th></th>
+                        <td colspan="2" class="buttonpadding">
+                            <input class="btn btn-primary btn-sm" type="submit" id="mysubmit" name="mysubmit" value="Update" />
+                            &nbsp;&nbsp;&nbsp;
+                            <input class="btn btn-warning btn-sm" type="button" onclick="ClearAll()" value="Clear" />
+                        </td>
+                    </tr>
+
+                </table>
+                }
+
+            </div>
+
+        </div>
+
+
+        <p id="blink" class="duplicate">
+            @if (TempData["duplicate"] != null)
+            {
+                @TempData["duplicate"];
+            }
+        </p>
+        <p class="success anim-typewriter">
+            @if (TempData["msg"] != null)
+            {
+                @TempData["msg"];
+            }
+        </p>
+
+        <table id="result" class="hover">
+            <thead>
+                <tr>
+                    <th width="200">Client Name</th>
+                    <th>Age</th>
+                    <th width="200">Email</th>
+                    <th width="300">Address</th>
+                    <th width="150">Phone</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,207 @@
+﻿@model WebDev.Models.@event
+@{
+    ViewBag.Title = "Event Search";
+}
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+<style>
+    .dataTables_paginate {
+        color: white !important;
+    }
+
+    .paginate_button {
+        color: white !important;
+    }
+</style>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#EventName").focus();
+        $('#date1, #date2, #Date').datepicker({
+            dateFormat: "yy/mm/dd",
+            showStatus: true,
+            showWeeks: true,
+            currentText: 'Now',
+            autoSize: true,
+            gotoCurrent: true,
+            showAnim: 'blind',
+            highlightWeek: true,
+            orderCellsTop: true,
+            fixedHeader: true
+        });
+
+        $("#result").DataTable({
+            "ajax": {
+                "url": "EventSearch/GetAllList",
+                "type": "GET",
+                "datatype": "json",
+                "dataSrc": ""
+            },
+            "columns": [
+                { "data": "EventName" },
+                { "data": "Date", className: "text-center" },
+                { "data": "Description" },
+                { "data": "Location" },
+                { "data": "TicketFee", className: "text-right"}
+            ],
+            "oLanguage": {
+                "sSearch": "Quick Search:"
+            },
+            "pageLength": 25
+        });
+
+        $("#dateRange").click(function () {
+            var date1 = $("#date1").val();
+            var date2 = $("#date2").val();
+            if (date1 == "" || date2 == "") {
+                alertify.alert("Empty date range", 'Please select date range. Both dates required');
+                return false;
+            }
+            var date1_val = moment(date1, ["YYYY/MM/DD", "YYYY-MM-DD"]);
+            var date2_val = moment(date2, ["YYYY/MM/DD", "YYYY-MM-DD"]);
+            if (date2_val < date1_val) {
+                alertify.alert("Invalid date range", 'Second Date should be greater than First Date');
+                return false;
+            }
+            var datatable = $("#result").DataTable();
+            $.get('/EventSearch/GetList_Date_Range?date1='+ date1+'&date2='+date2, function (newDataArray) {
+                datatable.clear();
+                datatable.rows.add(newDataArray);
+                datatable.draw();
+                var dataCount = datatable.data().count();
+                if (dataCount == 0) {
+                    alertify.error("No records found in your search");
+                } else {
+                    alertify.success(dataCount + " Record(s) found in your search");
+                }
+            });
+
+        });
+        $("#EventName").keyup(function () {
+            var eventKey = $("#EventName").val();
+            var eventDate = $("#Date").val();
+            var datatable = $("#result").DataTable();
+            if (eventDate == "") {
+                $.get('/EventSearch/GetList_EventOnly?ename=' + eventKey, function (newDataArray) {
+                    datatable.clear();
+                    datatable.rows.add(newDataArray);
+                    datatable.draw();
+                    var dataCount = datatable.data().count();
+                    if (dataCount == 0) {
+                        alertify.error("No records found in your search");
+                    } else {
+                        alertify.success(dataCount + " Record(s) found in your search");
+                    }
+                });
+            } else {
+                $.get('/EventSearch/GetList_EventandDate?ename=' + eventKey + '&edate=' + eventDate, function (newDataArray) {
+                    datatable.clear();
+                    datatable.rows.add(newDataArray);
+                    datatable.draw();
+                    var dataCount = datatable.data().count();
+                    if (dataCount == 0) {
+                        alertify.error("No records found in your search");
+                    } else {
+                        alertify.success(dataCount + " Record(s) found in your search");
+                    }
+                });
+            }
+        });
+
+        $('body').on('change', '#Date', function (e) {
+            $("#EventName").trigger('keyup');
+        });
+        $("#getValues").click(function () {
+            $("#EventName").trigger('keyup');
+        });
+    }); //doc
+     function ClearAll() {
+            location.href = '@Url.Action("Index","EventSearch")';
+        }
+</script>
+@{
+    Random rnd = new Random();
+    int picID = rnd.Next(1, 7);
+    picID++;
+    var picName = "~/Content/images/" + picID + ".png";
+}
+
+<div class="container">
+    <div calss="row">
+        <div class="col-sm-12 slogans"></div>
+    </div>
+
+    <div class="img-forms" style="background-image: url('@Url.Content(picName)');">
+        <div class="row">
+            <div class="col-sm-12 header-data">Search for Events</div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-4">
+                @using (Html.BeginForm("EventList", "EventSearch", FormMethod.Post))
+                {
+                    <table class="viewData">
+                        <tr>
+                            <th width="35%">@Html.LabelFor(model => model.EventName, new { @class = "myLabel" })</th>
+                            <td>@Html.TextBoxFor(model => model.EventName, new { @placeholder = "Any keyword" })</td>
+
+                        </tr>
+                        <tr>
+                            <th>@Html.LabelFor(model => model.Date, new { @class = "myLabel" })</th>
+                            <td>@Html.TextBoxFor(model => model.Date, "{0:dd-MM-yyyy}")</td>
+
+                        </tr>
+                        <tr>
+                            <th></th>
+                            <td>
+                                <input type="button" class="btn btn-primary btn-sm" id="getValues" value="View" />
+                                &nbsp;&nbsp;&nbsp;
+                                @Html.ActionLink("Clear", null, null, new { @class = "btn btn-danger btn-sm", @onclick = "ClearAll();" })
+                            </td>
+
+                        </tr>
+
+                    </table>
+                }
+
+            </div>
+            <div class="col-sm-4">
+                @using (Html.BeginForm("EventRange", "EventSearch", FormMethod.Post))
+                {
+                    <table class="viewData">
+                        <tr>
+                            <th width="30%">@Html.LabelFor(model => model.date1, new { @class = "myLabel" })</th>
+                            <td width="30%">@Html.TextBoxFor(model => model.date1, "{0:yyyy/MM/dd}")</td>
+                        </tr>
+                        <tr>
+                            <th width="30%">@Html.LabelFor(model => model.date2, new { @class = "myLabel" })</th>
+                            <td width="30%">@Html.TextBoxFor(model => model.date2, "{0:yyyy/MM/dd}")</td>
+                        </tr>
+                        <tr>
+                            <th></th>
+                            <td width="50%"><input type="button" class="btn btn-primary btn-sm" id="dateRange" value="View" /></td>
+                        </tr>
+
+                    </table>
+                }
+
+            </div>
+            <div class="col-sm-2"></div>
+        </div>
+
+        <div class="header-data">Search Result</div>
+        <br />
+        <table id="result" class="hover">
+            <thead>
+                <tr>
+                    <th width="20%">Event Name</th>
+                    <th width="10%">Date</th>
+                    <th width="40%">Description</th>
+                    <th width="15%">Location</th>
+                    <th width="5%">Fee</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+
+

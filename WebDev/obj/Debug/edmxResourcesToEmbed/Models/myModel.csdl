@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="myDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="client">
+    <Key>
+      <PropertyRef Name="Email" />
+    </Key>
+    <Property Name="Email" Type="String" MaxLength="35" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="FullName" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Address" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Age" Type="Int32" Nullable="false" />
+    <Property Name="Phone" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="registers" Relationship="Self.FK__register__Email__276EDEB3" FromRole="client" ToRole="register" />
+  </EntityType>
+  <EntityType Name="event">
+    <Key>
+      <PropertyRef Name="EventName" />
+    </Key>
+    <Property Name="EventName" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Location" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Date" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="TicketFee" Type="Double" Nullable="false" />
+    <NavigationProperty Name="registers" Relationship="Self.FK__register__EventN__286302EC" FromRole="event" ToRole="register" />
+  </EntityType>
+  <EntityType Name="register">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="GuestNumber" Type="Int32" Nullable="false" />
+    <Property Name="PaymentAmount" Type="Double" />
+    <Property Name="EventName" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="Email" Type="String" MaxLength="35" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="client" Relationship="Self.FK__register__Email__276EDEB3" FromRole="register" ToRole="client" />
+    <NavigationProperty Name="event" Relationship="Self.FK__register__EventN__286302EC" FromRole="register" ToRole="event" />
+  </EntityType>
+  <Association Name="FK__register__Email__276EDEB3">
+    <End Role="client" Type="Self.client" Multiplicity="0..1" />
+    <End Role="register" Type="Self.register" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="client">
+        <PropertyRef Name="Email" />
+      </Principal>
+      <Dependent Role="register">
+        <PropertyRef Name="Email" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__register__EventN__286302EC">
+    <End Role="event" Type="Self.event" Multiplicity="0..1" />
+    <End Role="register" Type="Self.register" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="event">
+        <PropertyRef Name="EventName" />
+      </Principal>
+      <Dependent Role="register">
+        <PropertyRef Name="EventName" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="myDBEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="clients" EntityType="Self.client" />
+    <EntitySet Name="events" EntityType="Self.event" />
+    <EntitySet Name="registers" EntityType="Self.register" />
+    <AssociationSet Name="FK__register__Email__276EDEB3" Association="Self.FK__register__Email__276EDEB3">
+      <End Role="client" EntitySet="clients" />
+      <End Role="register" EntitySet="registers" />
+    </AssociationSet>
+    <AssociationSet Name="FK__register__EventN__286302EC" Association="Self.FK__register__EventN__286302EC">
+      <End Role="event" EntitySet="events" />
+      <End Role="register" EntitySet="registers" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

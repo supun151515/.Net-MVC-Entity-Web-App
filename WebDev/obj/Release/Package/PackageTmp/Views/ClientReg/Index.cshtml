@@ -1,0 +1,133 @@
+﻿@model WebDev.Models.client
+@{
+    ViewBag.Title = "Client Registration";
+
+}
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+<script type="text/javascript">
+    $(document).ready(function () {
+       // setInterval(function () { blink() }, 500);
+        $("#FullName").focus();
+        setTimeout(function () { $(".success").fadeOut(5000); }, 5000);
+
+        $("#result").DataTable({
+            "ajax": {
+                "url": "/ClientReg/getAllData",
+                "type": "GET",
+                "datatype": "json",
+                "dataSrc": ""
+            },
+            "columns": [
+                { "data": "FullName" },
+                { "data": "Age", className: "text-center"},
+                { "data": "Email" },
+                { "data": "Address" },
+                { "data": "Phone" }
+            ],
+            "oLanguage": {
+                "sSearch": "Quick Search:"
+            },
+            "pageLength": 25
+        });
+    }); //doc ready
+    function ClearAll() {
+            location.href = '@Url.Action("Index","ClientReg")';
+        }
+    function blink() {
+        //$(".fgfg").fadeTo(100, 0.1).fadeTo(200, 1.0);
+    }
+
+</script>
+@{
+    Random rnd = new Random();
+    int picID = rnd.Next(1, 7);
+    picID++;
+    var picName = "~/Content/images/" + picID + ".png";
+}
+<div class="container">
+    <div calss="row">
+        <div class="col-sm-12 slogans">Make any occasion unforgettable</div>
+    </div>
+    <div class="img-forms" style="background-image: url('@Url.Content(picName)');">
+        <div class="row">
+            <div class="col-sm-12 header-data">Client Registration</div>
+        </div>
+        <div class="row">
+            <div class="col-sm-8">
+                @using (Html.BeginForm("Index", "ClientReg", FormMethod.Post))
+                {
+                    <table align="center">
+                        <tr>
+                            <th width="30%">@Html.LabelFor(model => model.FullName, new { @class = "myLabel" })</th>
+                            <td width="30%">@Html.EditorFor(model => model.FullName, new { @class = "form-control", autofocus = "autofocus" })</td>
+                            <td width="40%">@Html.ValidationMessageFor(model => model.FullName, "", new { @class = "errorMsg" })</td>
+                        </tr>
+                        <tr>
+                            <th>@Html.LabelFor(model => model.Age, new { @class = "myLabel" })</th>
+                            <td>@Html.EditorFor(model => model.Age, new { @class = "form-control" })</td>
+                            <td>@Html.ValidationMessageFor(model => model.Age, "", new { @class = "errorMsg" })</td>
+                        </tr>
+                        <tr>
+                            <th>@Html.LabelFor(model => model.Email, new { @class = "myLabel" })</th>
+                            <td>@Html.EditorFor(model => model.Email, new { @class = "form-control" })</td>
+                            <td>@Html.ValidationMessageFor(model => model.Email, "", new { @class = "errorMsg" })</td>
+                        </tr>
+                        <tr>
+                            <th>@Html.LabelFor(model => model.Address, new { @class = "myLabel" })</th>
+                            <td>@Html.EditorFor(model => model.Address, new { @class = "form-control" })</td>
+                            <td>@Html.ValidationMessageFor(model => model.Address, "", new { @class = "errorMsg" })</td>
+                        </tr>
+                        <tr>
+                            <th>@Html.LabelFor(model => model.Phone, new { @class = "myLabel" })</th>
+                            <td>@Html.EditorFor(model => model.Phone, new { @class = "form-control" })</td>
+                            <td>@Html.ValidationMessageFor(model => model.Phone, "", new { @class = "errorMsg" })</td>
+                        </tr>
+                        <tr>
+                            <th></th>
+                            <td colspan="2" class="buttonpadding">
+                                <input class="btn btn-primary btn-sm" type="submit" name="submit" value="Register" />
+                                &nbsp;&nbsp;&nbsp;
+                                <input class="btn btn-warning btn-sm" type="button" onclick="ClearAll()" value="Clear" />
+                            </td>
+                        </tr>
+
+                    </table>
+                }
+
+            </div>
+
+        </div>
+    </div>
+    </div>
+
+<p id="blink" class="duplicate">
+    @if (TempData["duplicate"] != null)
+    {
+        @TempData["duplicate"];
+    <script>
+            alertify.error(@TempData["duplicate"]);
+    </script>
+    }
+</p>
+<p class="success anim-typewriter">
+    @if (TempData["msg"] != null)
+    {
+        @TempData["msg"];
+    <script>
+            alertify.success(@TempData["msg"]);
+    </script>
+    }
+</p>
+
+    <table id="result" class="hover">
+        <thead>
+            <tr>
+                <th width="200">Client Name</th>
+                <th>Age</th>
+                <th width="200">Email</th>
+                <th width="300">Address</th>
+                <th width="150">Phone</th>
+            </tr>
+        </thead>
+    </table>

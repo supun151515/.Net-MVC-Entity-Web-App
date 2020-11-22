@@ -1,0 +1,104 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Event Management System</title>
+
+    <link rel="shortcut icon" href="~/Content/images/fav.ico" />
+
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/dataTable.css" />
+    <link href="~/Content/Site.css" rel="stylesheet" />
+    <link href="~/Content/success.css" rel="stylesheet" />
+    <link href="~/Content/alertify.min.css" rel="stylesheet" />
+
+    <script src="~/Scripts/modernizr-2.8.3.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+            integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.20/datatables.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/moment.js"></script>
+    <script src="~/Scripts/alertify.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var pathname = window.location.pathname;
+            $('.navbar-nav > li > a[href="' + pathname + '"]').parent().addClass('active'); //for home only
+            $('.navbar-nav > li > div > a[href="' + pathname + '"]').addClass('active');
+            $('.navbar-nav > li > div > a[href="' + pathname + '"]').parent().parent().addClass('active'); // clients & events
+            Change_Slogan();
+        });
+        function Change_Slogan() {
+            var slogans = new Array(
+                "Make any occasion unforgettable",
+                "Our business is making memories",
+                "Exclusive events, priceless memories",
+                "Memorable events don’t just happen. They happen to be our business",
+                "Sit back while we create the experience of a lifetime",
+                "Handling the stress so your event is a success",
+                "Handling the stress so your event is a success",
+                "Because in your dreams, every detail matters",
+                "Every love story is beautiful, but yours should be unique",
+                "Precise coordination, extraordinary results",
+                "Fabulously planned… Remembered always"
+            );
+            random = slogans[Math.floor(Math.random() * slogans.length)];
+            $(".slogans").text(random);
+        }
+    </script>
+</head>
+<body>
+    <div id="footer"><a target="_blank" href="https://moodle.weltec.ac.nz/my/">Copyright &copy;  @DateTime.Now.Year Supun Silva. All rights reserved &reg;</a></div>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+
+                <img class="logo_image" src="https://moodle.weltec.ac.nz/theme/image.php/weltec/theme/1575238179/logo" alt="" />
+
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item btn btn-sm btn-outline-secondary">
+                            @Html.ActionLink("Home", "Index", "Home", null, new { @class = "nav-link" })
+                    </li>
+                    <li class="nav-item dropdown btn btn-sm btn-outline-secondary">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Clients
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            @Html.ActionLink("Client Registration", "Index", "ClientReg", null, new { @class = "dropdown-item" })
+                            <div class="dropdown-divider"></div>
+                            @Html.ActionLink("Update Client", "Index", "ClientEdit", null, new { @class = "dropdown-item" })
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown btn btn-sm btn-outline-secondary">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Events
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            @Html.ActionLink("Event Registration", "Index", "EventReg", null, new { @class = "dropdown-item" })
+                            <div class="dropdown-divider"></div>
+                            @Html.ActionLink("Search Event", "Index", "EventSearch", null, new { @class = "dropdown-item" })
+                            <div class="dropdown-divider"></div>
+                            @Html.ActionLink("Delete Event", "Index", "EventDelete", null, new { @class = "dropdown-item" })
+                        </div>
+                    </li>
+                </ul>
+                <span class="webdev">SD7501 Web Application Development</span>
+            </div>
+            </div>
+    </nav>
+    <div class="container body-content">
+        @RenderBody()
+    </div>
+</body>
+</html>

@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="myDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="client">
+    <Key>
+      <PropertyRef Name="Email" />
+    </Key>
+    <Property Name="Email" Type="varchar" MaxLength="35" Nullable="false" />
+    <Property Name="FullName" Type="varchar" MaxLength="25" Nullable="false" />
+    <Property Name="Address" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Age" Type="int" Nullable="false" />
+    <Property Name="Phone" Type="varchar" MaxLength="15" Nullable="false" />
+  </EntityType>
+  <EntityType Name="event">
+    <Key>
+      <PropertyRef Name="EventName" />
+    </Key>
+    <Property Name="EventName" Type="varchar" MaxLength="25" Nullable="false" />
+    <Property Name="Description" Type="varchar" MaxLength="60" Nullable="false" />
+    <Property Name="Location" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="Date" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="TicketFee" Type="float" Nullable="false" />
+  </EntityType>
+  <EntityType Name="register">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="GuestNumber" Type="int" Nullable="false" />
+    <Property Name="PaymentAmount" Type="float" />
+    <Property Name="EventName" Type="varchar" MaxLength="25" />
+    <Property Name="Email" Type="varchar" MaxLength="35" />
+  </EntityType>
+  <Association Name="FK__register__Email__276EDEB3">
+    <End Role="client" Type="Self.client" Multiplicity="0..1" />
+    <End Role="register" Type="Self.register" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="client">
+        <PropertyRef Name="Email" />
+      </Principal>
+      <Dependent Role="register">
+        <PropertyRef Name="Email" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__register__EventN__286302EC">
+    <End Role="event" Type="Self.event" Multiplicity="0..1" />
+    <End Role="register" Type="Self.register" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="event">
+        <PropertyRef Name="EventName" />
+      </Principal>
+      <Dependent Role="register">
+        <PropertyRef Name="EventName" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="myDBModelStoreContainer">
+    <EntitySet Name="client" EntityType="Self.client" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="event" EntityType="Self.event" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="register" EntityType="Self.register" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__register__Email__276EDEB3" Association="Self.FK__register__Email__276EDEB3">
+      <End Role="client" EntitySet="client" />
+      <End Role="register" EntitySet="register" />
+    </AssociationSet>
+    <AssociationSet Name="FK__register__EventN__286302EC" Association="Self.FK__register__EventN__286302EC">
+      <End Role="event" EntitySet="event" />
+      <End Role="register" EntitySet="register" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

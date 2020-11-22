@@ -1,0 +1,156 @@
+﻿
+@{
+    ViewBag.Title = "Home";
+}
+<link href="~/Content/slider.css" rel="stylesheet" />
+<script src="~/Scripts/jquery.nivo.slider.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#slider').nivoSlider();
+    });
+</script>
+
+<div class="container noheight">
+    <div class="row">
+        <div class="col-sm-4 body-header">Event Management System</div>
+        <div id="alert" class="col-sm-8 head_name">Life is an event. Make it memorable</div>
+    </div>
+</div>
+<!------ Slider ------------>
+<div class="wrap">
+    <div class="slider">
+        <div class="slider-wrapper theme-default">
+            <div id="slider" class="nivoSlider">
+                <img src="~/Content/images/1.png" data-thumb="~/Content/images/1.png" alt="" />
+                <img src="~/Content/images/2.png" data-thumb="~/Content/images/2.png" alt="" />
+                <img src="~/Content/images/3.png" data-thumb="~/Content/images/3.png" alt="" />
+                <img src="~/Content/images/4.png" data-thumb="~/Content/images/4.png" alt="" />
+                <img src="~/Content/images/5.png" data-thumb="~/Content/images/5.png" alt="" />
+                <img src="~/Content/images/6.png" data-thumb="~/Content/images/6.png" alt="" />
+                <img src="~/Content/images/1.png" data-thumb="~/Content/images/7.png" alt="" />
+                <img src="~/Content/images/2.png" data-thumb="~/Content/images/8.png" alt="" />
+                <img src="~/Content/images/3.png" data-thumb="~/Content/images/9.png" alt="" />
+                <img src="~/Content/images/4.png" data-thumb="~/Content/images/10.png" alt="" />
+                <img src="~/Content/images/5.png" data-thumb="~/Content/images/11.png" alt="" />
+                <img src="~/Content/images/6.png" data-thumb="~/Content/images/12.png" alt="" />
+                <img src="~/Content/images/1.png" data-thumb="~/Content/images/13.png" alt="" />
+                <img src="~/Content/images/2.png" data-thumb="~/Content/images/14.png" alt="" />
+                <img src="~/Content/images/3.png" data-thumb="~/Content/images/15.png" alt="" />
+                <img src="~/Content/images/4.png" data-thumb="~/Content/images/16.png" alt="" />
+            </div>
+        </div>
+    </div>
+</div>
+<!------End Slider ------------>
+<div class="upcoming_head">
+    Upcoming Events...
+</div>
+
+<div class="container">
+    <div class="row">
+        @{
+            Random rnd = new Random();
+            int picID = rnd.Next(1, 7);
+        }
+        @foreach (var eventHit in (ViewBag.LatestEvents))
+        {
+            DateTime date_val = Convert.ToDateTime(eventHit.Date);
+
+            picID++;
+            var picName = picID + ".png";
+
+
+        <div class="col-sm-4 box-outer">
+            
+            <div class="box-data hvr-shutter-out-horizontal tooltipclass">
+                <div class="tooltiptext">@eventHit.Description <p class="location"><br />@eventHit.Location</p><p class="fee">Fee $@eventHit.TicketFee</p></div>
+                <img class="img-center" src="~/Content/images/@picName" alt="" />
+                <span class="event-name">@eventHit.EventName</span>
+                <p class="event-date-day">
+                    @date_val.ToString("dd")
+                    <span class="event-date-month">@date_val.ToString("MMMM")</span>
+                    <span class="event-date-year">@date_val.ToString("yyyy")</span>
+                </p>
+            </div>
+        </div>
+        }
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12 aboutus">
+            <p>This online event registration system allows users to create new clients, assign events for registered clients and search saved events.</p>
+            <br />
+            <p>To create a new client, click on <a href="/ClientReg">Client Registration</a> menu item. Once the page loads, follow the given form to fill required information and click on <b>Register</b> button to save data.</p>
+            <br />
+            <p>There are already pre-registered events in the system and users are not allowed to create any new event. But users can search for events by clicking on <a href="/EventSearch">Search Events</a> menu item. users can search event by event name or event date.</p>
+            <br />
+            <p>To assign event to a registered client, click on <a href="/EventReg">Event Registration</a> menu item. Then follow the form given to assign a client to a event.</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-5 myborder">
+            <p>Web Application Development (SD7501)</p>
+            <p>Assignment 2 – Trimester 1 March 2020</p>
+            <p>Dr. Reza Moosaei</p>
+        </div>
+        <div class="col-sm-2">
+
+        </div>
+        <div class="col-sm-5 myborder">
+            <p>Submitted By: Supun Silva (2193624)</p>
+            <p>Whitireia & WELTEC</p>
+            <p>Due Date: Sunday 31st of May</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12 aboutus" style="color:aquamarine">
+            <table border="1">
+                <tr>
+                    <th width="30%">Resources used</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td>JQuery 3.4.1</td>
+                    <td>Latest version (3.5.0) do not support some bootstrap events</td>
+                </tr>
+                <tr>
+                    <td>JQuery UI 1.12.1</td>
+                    <td>UI implementation</td>
+                </tr>
+                <tr>
+                    <td>Bootstrap 4.4.1</td>
+                    <td>Responsive layout</td>
+                </tr>
+                <tr>
+                    <td>MomentJS 2.18.1</td>
+                    <td>Used to convert string to Date format</td>
+                </tr>
+                <tr>
+                    <td>DataTablesJS 1.10.20</td>
+                    <td>View Data</td>
+                </tr>
+                <tr>
+                    <td>AlertifyJS 1.13.1</td>
+                    <td>Present notifications</td>
+                </tr>
+                <tr>
+                    <td>NivoSlider 3.2</td>
+                    <td>Home Page Image Slider</td>
+                </tr>
+                <tr>
+                    <td>JQuery Validation Plugin 1.19.1</td>
+                    <td>Input validationr</td>
+                </tr>
+                <tr>
+                    <td>Unobtrusive Validation Lib for JQuery</td>
+                    <td>
+                        MS support lib for JQuery Validation plugin
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>

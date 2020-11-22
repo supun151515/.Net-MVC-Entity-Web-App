@@ -1,0 +1,436 @@
+﻿body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: url(images/bg_f.jpg) no-repeat center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    background-position: center;
+
+}
+#footer {
+    z-index: 5000;
+    position: fixed;
+    right: 0;
+    padding-left: 3px;
+    font-size: 12px;
+    text-shadow: 0px 1px 0px rgba(255, 255, 255, 1);
+    color:greenyellow;
+}
+.webdev {
+    color: aqua;
+    font-size: 15px;
+    font-family: 'FugazOne-Regular';
+}
+.logo_image {
+    width: 200px;
+    height: 50px;
+}
+.slogans {
+    text-shadow: 10px 10px 10px #FFBC21;
+    color: aqua;
+    font-size: 35px;
+    font-family: 'IndieFlower-Regular';
+}
+
+.body-header {
+    padding-bottom: 50px;
+    font-size: 25px;
+    color: #FFFFFF;
+    text-shadow: 0 0 5px #FFF, 0 0 10px #FFF, 0 0 15px #FFF, 0 0 20px #49ff18, 0 0 30px #49FF18, 0 0 40px #49FF18, 0 0 55px #49FF18, 0 0 75px #49ff18;
+}
+.head_name {
+    font-family: 'GloriaHallelujah-Regular';
+    font-size: 30px;
+    color: #FFFFFF;
+    text-align:right;
+    top:20px;
+    z-index:100;
+    text-shadow: 0 -1px 4px #FFF, 0 -2px 10px #ff0, 0 -10px 20px #ff8000, 0 -18px 40px #F00;
+}
+.noheight{
+    height:10px;
+}
+
+@font-face {
+    font-family: 'IndieFlower-Regular';
+    src: url('fonts/IndieFlower-Regular.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'Bangers-Regular';
+    src: url('fonts/Bangers-Regular.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'MeriendaOne-Regular';
+    src: url('fonts/MeriendaOne-Regular.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'GloriaHallelujah-Regular';
+    src: url('fonts/GloriaHallelujah-Regular.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'FugazOne-Regular';
+    src: url('fonts/FugazOne-Regular.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'FiraCode-VariableFont_wght';
+    src: url('fonts/FiraCode-VariableFont_wght.ttf') format('truetype');
+}
+.upcoming {
+    font-family: 'MeriendaOne-Regular';
+}
+.upcoming_head {
+    font-family: 'FugazOne-Regular';
+    font-size: 35px;
+}
+#alert {
+    color: #39f !important;
+}
+
+@-webkit-keyframes colours {
+    0% {
+        color: #39f;
+    }
+    25% {
+        color: #8bc5d1;
+    }
+    50% {
+        color: #f8cb4a;
+    }
+    75% {
+        color: #8bc5d1;
+    }
+    100% {
+        color: #39f;
+    }
+}
+@-moz-keyframes colours {
+    0% {
+        color: #39f;
+    }
+    25% {
+        color: #8bc5d1;
+    }
+    50% {
+        color: #f8cb4a;
+    }
+    75% {
+        color: #8bc5d1;
+    }
+    100% {
+        color: #39f;
+    }
+}
+
+#alert {
+    -webkit-animation-direction: normal;
+    -webkit-animation-duration: 10s;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-name: colours;
+    -webkit-animation-timing-function: ease;
+    -moz-animation-direction: normal;
+    -moz-animation-duration: 10s;
+    -moz-animation-iteration-count: infinite;
+    -moz-animation-name: colours;
+    -moz-animation-timing-function: ease;
+}
+.upcoming_head {
+    -webkit-animation: color-change 1s infinite;
+    -moz-animation: color-change 1s infinite;
+    -o-animation: color-change 1s infinite;
+    -ms-animation: color-change 1s infinite;
+    animation: color-change 1s infinite;
+}
+
+@-webkit-keyframes color-change {
+    0% {
+        color: red;
+    }
+
+    50% {
+        color: blue;
+    }
+
+    100% {
+        color: red;
+    }
+}
+
+@-moz-keyframes color-change {
+    0% {
+        color: red;
+    }
+
+    50% {
+        color: blue;
+    }
+
+    100% {
+        color: red;
+    }
+}
+
+@-ms-keyframes color-change {
+    0% {
+        color: red;
+    }
+
+    50% {
+        color: blue;
+    }
+
+    100% {
+        color: red;
+    }
+}
+
+@-o-keyframes color-change {
+    0% {
+        color: red;
+    }
+
+    50% {
+        color: blue;
+    }
+
+    100% {
+        color: red;
+    }
+}
+
+@keyframes color-change {
+    0% {
+        color: red;
+    }
+
+    50% {
+        color: blue;
+    }
+
+    100% {
+        color: red;
+    }
+}
+.aboutus {
+    padding: 50px;
+    color: white;
+    font-family: 'FiraCode-VariableFont_wght';
+    font-size:15px;
+}
+
+.myborder {
+    border: 5px solid #1C6EA4;
+    border-radius: 12px;
+    padding: 20px;
+    color: skyblue;
+}
+.myborder p {
+    padding:10px;
+}
+.myLabel {
+    color: white;
+}
+.header-data {
+    padding: 25px;
+    color: white;
+    font-family: 'MeriendaOne-Regular';
+}
+
+.errorMsg {
+    animation: blink 2s linear infinite;
+    color: white;
+    font-size: 10px;
+    font-weight: bold;
+    font-family: sans-serif;
+    padding-left:10px;
+}
+
+@keyframes blink {
+    0% {
+        opacity: 0;
+    }
+
+    25% {
+        opacity: 1;
+    }
+    50%{
+        opacity:0
+    }
+    75%{
+        opacity:1
+    }
+}
+
+.duplicate {
+    animation: dup 1s linear infinite;
+    font-size: 20px;
+    color: white;
+    padding-top:20px;
+    text-align:center;
+}
+@keyframes dup {
+    0% {
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 1
+    }
+
+}
+
+.buttonpadding{
+    padding-top:20px;
+}
+
+.viewData {
+    border-width: 10px;
+    border-style: solid;
+    border-color: #2eb9ce;
+ 
+
+}
+.viewData th, td {
+    padding-top:10px;
+}
+#result th {
+    color:white;
+}
+.dataTables_length{
+    color:white !important;
+}
+.dataTables_filter{
+    color:white !important;
+}
+.dataTables_paginate {
+    color:white !important;
+}
+
+
+.box-data {
+    border: 5px solid #1C6EA4;
+    border-radius: 40px;
+    width: 98%;
+    height: 270px;
+    text-align: center;
+}
+.box-outer {
+    padding: 20px;
+    text-shadow: 0 0 5px #FFF, 0 0 10px #FFF, 0 0 15px #FFF, 0 0 20px #49ff18, 0 0 30px #49FF18, 0 0 40px #49FF18, 0 0 55px #49FF18, 0 0 75px #49ff18;
+}
+.img-center {
+    display: inline;
+    margin-left: auto;
+    margin-right: auto;
+    width: 85%;
+}
+.img-forms {
+    background-repeat: no-repeat;
+    background-size: 500px 310px;
+    background-position:right;
+    background-position-y:top;
+}
+.event-name {
+    font-family: 'MeriendaOne-Regular';
+    padding: 15px;
+    font-size:20px;
+    color: #800080
+}
+.event-date-day {
+    color: #009933;
+    font-size: 35px;
+    font-family: 'Bangers-Regular';
+}
+.event-date-month {
+    color: #004d1a;
+    font-size: 20px;
+    font-family: 'GloriaHallelujah-Regular';
+}
+.event-date-year {
+    color: #000000;
+    font-size: 12px;
+    font-family: 'MeriendaOne-Regular';
+}
+
+/* Shutter Out Horizontal */
+.hvr-shutter-out-horizontal {
+    display: inline-block;
+    vertical-align: middle;
+    -webkit-transform: perspective(1px) translateZ(0);
+    transform: perspective(1px) translateZ(0);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+    position: relative;
+    background: #e1e1e1;
+    -webkit-transition-property: color;
+    transition-property: color;
+    -webkit-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+}
+
+    .hvr-shutter-out-horizontal:before {
+        content: "";
+        position: absolute;
+        z-index: -1;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: #2098D1;
+        -webkit-transform: scaleX(0);
+        transform: scaleX(0);
+        -webkit-transform-origin: 50%;
+        transform-origin: 50%;
+        -webkit-transition-property: transform;
+        transition-property: transform;
+        -webkit-transition-duration: 0.3s;
+        transition-duration: 0.3s;
+        -webkit-transition-timing-function: ease-out;
+        transition-timing-function: ease-out;
+        border-radius: 40px;
+    }
+
+    .hvr-shutter-out-horizontal:hover, .hvr-shutter-out-horizontal:focus, .hvr-shutter-out-horizontal:active {
+        color: white;
+    }
+
+        .hvr-shutter-out-horizontal:hover:before, .hvr-shutter-out-horizontal:focus:before, .hvr-shutter-out-horizontal:active:before {
+            -webkit-transform: scaleX(1);
+            transform: scaleX(1);
+        }
+
+.tooltip {
+
+}
+
+.tooltiptext {
+    visibility: hidden;
+    background-color: black;
+    color: #fff;
+    font-size: 20px;
+    text-align: left;
+    border-radius: 40px;
+    padding: 20px;
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+    opacity: 0.8;
+    color: #333333;
+    background: #FFFFFF;
+    font-family: 'MeriendaOne-Regular';
+    text-shadow: 0px 3px 3px rgba(255,255,255,0.5);
+    transition: all 0.5s linear 0s;
+    height: 0px;
+    display: block;
+}
+
+.tooltipclass:hover .tooltiptext {
+    visibility: visible;
+    height: 220px;
+}
+
+.location {
+   font-family:'FugazOne-Regular';
+}
+.fee {
+    font-family: 'MeriendaOne-Regular';
+}

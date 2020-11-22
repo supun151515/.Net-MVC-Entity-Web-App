@@ -1,0 +1,138 @@
+﻿@model WebDev.Models.register
+@{
+    ViewBag.Title = "Event Registration";
+}
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+<script type="text/javascript">
+    $(document).ready(function () {
+       // setInterval(function () { blink() }, 500);
+        $("#FullName").focus();
+        setTimeout(function () { $(".success").fadeOut(5000); }, 5000);
+
+        $("#result").DataTable({
+            "ajax": {
+                "url": "/EventReg/getAllData",
+                "type": "GET",
+                "datatype": "json",
+                "dataSrc": ""   
+         },
+            "columns": [
+                { "data": "ID" },
+                { "data": "EventName" },
+                { "data": "GuestNumber" },
+                { "data": "PaymentAmount", className: "text-right" },
+                { "data": "Email" },
+                { "data": "FullName" },
+                { "data": "Phone" },
+                { "data": "Date" },
+                { "data": "TicketFee", className: "text-right" },
+            ],
+            "order": [[0, 'desc']],
+            "oLanguage": {
+                "sSearch": "Quick Search:"
+            },
+            "pageLength": 25
+        });
+    }); //doc ready
+    function ClearAll() {
+            location.href = '@Url.Action("Index","EventReg")';
+        }
+    function blink() {
+        //$(".fgfg").fadeTo(100, 0.1).fadeTo(200, 1.0);
+    }
+
+</script>
+@{
+    Random rnd = new Random();
+    int picID = rnd.Next(1, 7);
+    picID++;
+    var picName = "~/Content/images/" + picID + ".png";
+}
+
+<div class="container">
+    <div calss="row">
+        <div class="col-sm-12 slogans"></div>
+    </div>
+    <div class="img-forms" style="background-image: url('@Url.Content(picName)');">
+        <div class="row">
+            <div class="col-sm-8 header-data">Event Registration</div>
+            <div class="col-sm-4 header-data"></div>
+        </div>
+        <div class="row">
+            <div class="col-sm-8">
+                @using (Html.BeginForm("Index", "EventReg", FormMethod.Post))
+                {
+                    <table align="center">
+                        <tr>
+                            <th width="30%">@Html.LabelFor(model => model.EventName, new { @class = "myLabel" })</th>
+                            <td width="30%">@Html.DropDownList("EventName", null, "--Select--", new { @class = "form-control", required = "", title = "Please select Event Name", style = "width:250px;" })</td>
+                            <td width="40%">@Html.ValidationMessageFor(model => model.EventName, null, new { @class = "errorMsg" })</td>
+                        </tr>
+                        <tr>
+                            <th style="padding-top:10px;">@Html.LabelFor(model => model.GuestNumber, new { @class = "myLabel" })</th>
+                            <td>@Html.Editor("GuestNumber", null, new { @class = "form-control" })</td>
+                            <td>@Html.ValidationMessageFor(model => model.GuestNumber, "", new { @class = "errorMsg" })</td>
+                        </tr>
+                        <tr>
+                            <th>@Html.LabelFor(model => model.PaymentAmount, new { @class = "myLabel" })</th>
+                            <td>@Html.EditorFor(model => model.PaymentAmount, new { @class = "form-control" })</td>
+                            <td>@Html.ValidationMessageFor(model => model.PaymentAmount, "", new { @class = "errorMsg" })</td>
+                        </tr>
+                        <tr>
+                            <th>@Html.LabelFor(model => model.Email, new { @class = "myLabel" })</th>
+                            <td>@Html.DropDownList("Email", null, "--Select--", new { @class = "form-control", required = "required", title = "Please select Email" })</td>
+                            <td>@Html.ValidationMessageFor(model => model.Email, "", new { @class = "errorMsg" })</td>
+                        </tr>
+
+                        <tr>
+                            <th></th>
+                            <td colspan="2" class="buttonpadding">
+                                <input class="btn btn-primary btn-sm" type="submit" name="submit" value="Register" />
+                                &nbsp;&nbsp;&nbsp;
+                                <input class="btn btn-warning btn-sm" type="button" onclick="ClearAll()" value="Clear" />
+                            </td>
+                        </tr>
+
+                    </table>
+                }
+
+            </div>
+
+        </div>
+    </div>
+</div>
+<p id="blink" class="duplicate">
+    @if (TempData["duplicate"] != null)
+    {
+        @TempData["duplicate"];
+    <script>
+            alertify.error('@TempData["duplicate"]');
+    </script>
+    }
+</p>
+<p class="success anim-typewriter">
+    @if (TempData["msg"] != null)
+    {
+        @TempData["msg"];
+    <script>
+            alertify.success( '@TempData["msg"]');
+    </script>
+    }
+</p>
+
+<table id="result" class="hover">
+    <thead>
+        <tr>
+            <th width="5">ID</th>
+            <th width="200">Event Name</th>
+            <th width="40">Guest Number</th>
+            <th width="50">Paid</th>
+            <th width="120">Email</th>
+            <th width="180">Full Name</th>
+            <th>Phone</th>
+            <th>Event Date</th>
+            <th>Ticket Fee</th>
+        </tr>
+    </thead>
+</table>
